@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by lucoo on 2016/10/27.
  */
 @Controller
+@RequestMapping("/member")
 public class MemberController {
 
     @Autowired

@@ -17,7 +17,8 @@ public class MemberService {
     public Member insert(String username) {
         Member member = new Member();
         member.setUsername(username);
-        memberWriteDao.insertSelective(member);
+        memberWriteDao.insert(member);
+//        memberWriteDao.insertXml(member);
         return member;
     }
 }

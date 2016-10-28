@@ -1,5 +1,6 @@
 package com.lucoo.boot.common.config.datasource.ads;
 
+import com.github.pagehelper.PageHelper;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -30,6 +32,15 @@ public class AdsDataSourceConfig {
     @Value("${spring.datasource.password}")
     private String dbPassword;
 
+    @Value("${mybatis.mapper-locations}")
+    private String mapperLocations;
+
+    @Value("${mybatis.type-aliases-package}")
+    private String typeAliasesPackage;
+
+    @Value("${mybatis.config-location}")
+    private String configLocation;
+
     @Bean(name = "adsDataSource")
     public DataSource adsDataSource() {
         HikariConfig hikariConfig = new HikariConfig();
@@ -49,6 +60,11 @@ public class AdsDataSourceConfig {
     public SqlSessionFactory adsSqlSessionFactory(@Qualifier("adsDataSource") DataSource adsDataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(adsDataSource);
+//        sqlSessionFactoryBean.setTypeAliasesPackage(typeAliasesPackage);
+        sqlSessionFactoryBean.setMapperLocations
+                (new PathMatchingResourcePatternResolver().getResources(mapperLocations));
+        sqlSessionFactoryBean.setConfigLocation
+                (new PathMatchingResourcePatternResolver().getResource(configLocation));
         return sqlSessionFactoryBean.getObject();
     }
 }

@@ -1,17 +1,15 @@
 package com.lucoo.boot.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by lucoo on 2016/10/27.
  */
+@Table(name = "t_member")
 public class Member {
-    @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //    @Id
+//    @Column(name = "Id")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private Integer age;

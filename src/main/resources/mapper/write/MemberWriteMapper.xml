@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lucoo.boot.dao.ads.MemberWriteDao">
+    <resultMap id="baseResultMap" type="com.lucoo.boot.entity.Member">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="age" property="age"/>
+    </resultMap>
+
+    <insert id="insertXml" parameterType="map">
+      INSERT INTO T_MEMBER(username,age)VALUES (#{member.username},#{member.age})
+    </insert>
+</mapper>

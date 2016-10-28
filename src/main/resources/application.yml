@@ -5,5 +5,7 @@ spring:
     password: lucoo
     driver-class-name: com.mysql.jdbc.Driver
 mybatis:
-  mapper-locations: classpath:/mapper/*.xml
+  mapper-locations: classpath:/mapper/write/*.xml
   config-location: classpath:mybatis-config.xml
+  type-aliases-package: com.lucoo.boot.entity
+
