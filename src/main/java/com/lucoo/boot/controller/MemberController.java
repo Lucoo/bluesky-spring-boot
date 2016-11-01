@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Created by lucoo on 2016/10/27.
  */
@@ -22,5 +24,11 @@ public class MemberController {
     @ResponseBody
     public Member insert(@PathVariable("username") String username) {
         return memberService.insert(username);
+    }
+
+    @RequestMapping(value = "/list.json")
+    @ResponseBody
+    public List<Member> getAllList() {
+        return memberService.getAllList();
     }
 }

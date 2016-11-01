@@ -7,4 +7,5 @@
         <result column="username" property="username"/>
         <result column="age" property="age"/>
     </resultMap>
+    
 </mapper>

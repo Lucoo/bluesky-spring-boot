@@ -7,9 +7,8 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.*;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -18,24 +17,40 @@ import javax.sql.DataSource;
  * Created by lucoo on 2016/10/27.
  */
 @Configuration
+@PropertySources({
+        @PropertySource(value = "classpath:/config/dev/jdbc.properties"),
+        @PropertySource(value = "classpath:/config/dev/mybatis.properties")
+})
 @MapperScan(basePackages = RdsDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "rdsSqlSessionFactory")
 public class RdsDataSourceConfig {
     static final String PACKAGE = "com.lucoo.boot.dao.rds";
 
-    @Value("${spring.datasource.url}")
+    @Value("${datasource.r.url}")
     private String dbUrl;
 
-    @Value("${spring.datasource.username}")
+    @Value("${datasource.r.username}")
     private String dbUser;
 
-    @Value("${spring.datasource.password}")
+    @Value("${datasource.r.password}")
     private String dbPassword;
+
+    @Value("${datasource.w.driverClassName}")
+    private String driverClassName;
+
+    @Value("${mybatis.mapper-locations}")
+    private String mapperLocations;
+
+    @Value("${mybatis.type-aliases-package}")
+    private String typeAliasesPackage;
+
+    @Value("${mybatis.config-location}")
+    private String configLocation;
 
     @Bean(name = "rdsDataSource")
     @Primary
     public DataSource rdsDataSource() {
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDriverClassName("com.mysql.jdbc.Driver");
+        hikariConfig.setDriverClassName(driverClassName);
         hikariConfig.setJdbcUrl(dbUrl);
         hikariConfig.setUsername(dbUser);
         hikariConfig.setPassword(dbPassword);
@@ -53,6 +68,10 @@ public class RdsDataSourceConfig {
     public SqlSessionFactory rdsSqlSessionFactory(@Qualifier("rdsDataSource") DataSource rdsDataSource) throws Exception {
         final SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(rdsDataSource);
+        sqlSessionFactoryBean.setMapperLocations
+                (new PathMatchingResourcePatternResolver().getResources(mapperLocations));
+        sqlSessionFactoryBean.setConfigLocation
+                (new PathMatchingResourcePatternResolver().getResource(configLocation));
         return sqlSessionFactoryBean.getObject();
     }
 }
