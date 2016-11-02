@@ -1,6 +1,6 @@
 package com.lucoo.boot.controller;
 
-import com.lucoo.boot.entity.Member;
+import com.lucoo.boot.entity.TMember;
 import com.lucoo.boot.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,15 +20,15 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @RequestMapping(value = "/{username}")
+    @RequestMapping(value = "/getList.json")
     @ResponseBody
-    public Member insert(@PathVariable("username") String username) {
-        return memberService.insert(username);
+    public List<TMember> getListByCondition() {
+        return memberService.getListByExample();
     }
 
-    @RequestMapping(value = "/list.json")
+    @RequestMapping(value = "/insert/{name}/{age}")
     @ResponseBody
-    public List<Member> getAllList() {
-        return memberService.getAllList();
+    public TMember insert(@PathVariable("name") String name, @PathVariable("age") Integer age) {
+       return memberService.insert(name,age);
     }
 }

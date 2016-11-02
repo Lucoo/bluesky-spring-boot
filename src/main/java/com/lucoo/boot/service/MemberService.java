@@ -1,8 +1,9 @@
 package com.lucoo.boot.service;
 
-import com.lucoo.boot.dao.ads.MemberWriteDao;
-import com.lucoo.boot.dao.rds.MemberReadDao;
-import com.lucoo.boot.entity.Member;
+import com.lucoo.boot.dao.ads.TMemberWriteMapper;
+import com.lucoo.boot.dao.rds.TMemberMapper;
+import com.lucoo.boot.entity.TMember;
+import com.lucoo.boot.entity.TMemberExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +14,23 @@ import java.util.List;
  */
 @Service
 public class MemberService {
-
     @Autowired
-    private MemberWriteDao memberWriteDao;
-
+    private TMemberMapper tMemberMapper;
     @Autowired
-    private MemberReadDao memberReadDao;
+    private TMemberWriteMapper tMemberWriteMapper;
 
-    public Member insert(String username) {
-        Member member = new Member();
-        member.setUsername(username);
-        memberWriteDao.insert(member);
-//        memberWriteDao.insertXml(member);
-        return member;
+    public List<TMember> getListByExample() {
+        TMemberExample tMemberExample = new TMemberExample();
+        TMemberExample.Criteria criteria = tMemberExample.createCriteria();
+        criteria.andUsernameEqualTo("lucoo2");
+        return tMemberMapper.selectByExample(tMemberExample);
     }
 
-    public List<Member> getAllList() {
-        return memberReadDao.selectAll();
+    public TMember insert(String name, Integer age) {
+        TMember tMember = new TMember();
+        tMember.setUsername(name);
+        tMember.setAge(age);
+        tMemberWriteMapper.insertSelective(tMember);
+        return tMember;
     }
 }

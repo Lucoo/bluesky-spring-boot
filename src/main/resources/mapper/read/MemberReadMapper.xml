@@ -7,5 +7,7 @@
         <result column="username" property="username"/>
         <result column="age" property="age"/>
     </resultMap>
-    
+    <select id="selectList" resultMap="baseResultMap">
+        SELECT * FROM t_member WHERE username = 'list'
+    </select>
 </mapper>
