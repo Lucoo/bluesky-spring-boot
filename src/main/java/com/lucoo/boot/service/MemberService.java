@@ -1,5 +1,8 @@
 package com.lucoo.boot.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.lucoo.boot.common.page.BlueSkyPage;
 import com.lucoo.boot.dao.ads.TMemberWriteMapper;
 import com.lucoo.boot.dao.rds.TMemberMapper;
 import com.lucoo.boot.entity.TMember;
@@ -19,11 +22,17 @@ public class MemberService {
     @Autowired
     private TMemberWriteMapper tMemberWriteMapper;
 
-    public List<TMember> getListByExample() {
+    public BlueSkyPage<TMember> getListByExample() {
         TMemberExample tMemberExample = new TMemberExample();
         TMemberExample.Criteria criteria = tMemberExample.createCriteria();
         criteria.andUsernameEqualTo("lucoo2");
-        return tMemberMapper.selectByExample(tMemberExample);
+        Page<TMember> page = PageHelper.startPage(1, 5);
+//        tMemberMapper.selectByExample(tMemberExample);
+        tMemberMapper.selectAll();
+        BlueSkyPage<TMember> blueSkyPage = new BlueSkyPage<>();
+        blueSkyPage.setTotalCount(page.getTotal());
+        blueSkyPage.setData(page.getResult());
+        return blueSkyPage;
     }
 
     public TMember insert(String name, Integer age) {

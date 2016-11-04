@@ -1,5 +1,6 @@
 package com.lucoo.boot.controller;
 
+import com.lucoo.boot.common.page.BlueSkyPage;
 import com.lucoo.boot.entity.TMember;
 import com.lucoo.boot.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,13 @@ public class MemberController {
 
     @RequestMapping(value = "/getList.json")
     @ResponseBody
-    public List<TMember> getListByCondition() {
+    public BlueSkyPage<TMember> getListByCondition() {
         return memberService.getListByExample();
     }
 
     @RequestMapping(value = "/insert/{name}/{age}")
     @ResponseBody
     public TMember insert(@PathVariable("name") String name, @PathVariable("age") Integer age) {
-       return memberService.insert(name,age);
+        return memberService.insert(name, age);
     }
 }
