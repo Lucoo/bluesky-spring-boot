@@ -26,9 +26,10 @@ public class MemberService {
         TMemberExample tMemberExample = new TMemberExample();
         TMemberExample.Criteria criteria = tMemberExample.createCriteria();
         criteria.andUsernameEqualTo("lucoo2");
+        tMemberExample.or().andIdEqualTo(new Long(1));
+        tMemberExample.setOrderByClause(" username desc");
         Page<TMember> page = PageHelper.startPage(1, 5);
-//        tMemberMapper.selectByExample(tMemberExample);
-        tMemberMapper.selectAll();
+        tMemberMapper.selectByExample(tMemberExample);
         BlueSkyPage<TMember> blueSkyPage = new BlueSkyPage<>();
         blueSkyPage.setTotalCount(page.getTotal());
         blueSkyPage.setData(page.getResult());
@@ -41,5 +42,9 @@ public class MemberService {
         tMember.setAge(age);
         tMemberWriteMapper.insertSelective(tMember);
         return tMember;
+    }
+
+    public List<TMember> getListByCache() {
+        return null;
     }
 }

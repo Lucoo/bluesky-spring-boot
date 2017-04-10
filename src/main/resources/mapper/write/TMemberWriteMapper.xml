@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lucoo.boot.dao.rds.TMemberMapper">
-  <resultMap id="BaseResultMap" type="com.lucoo.boot.entity.TMember">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="age" jdbcType="INTEGER" property="age" />
-  </resultMap>
+<mapper namespace="com.lucoo.boot.dao.ads.TMemberWriteMapper">
+    <insert id="batchInsertRecord" parameterType="java.util.List">
+        <!--<selectKey resultType="java.lang.Integer" keyProperty="id"-->
+        <!--order="AFTER">-->
+        <!--SELECT LAST_INSERT_ID()-->
+        <!--</selectKey>-->
+        insert into t_member
+        (id, username,age)
+        values
+        <foreach collection="list" item="member" index="index" separator=",">
+            (
+            #{member.id}, #{member.username},
+            #{member.age}
+            )
+        </foreach>
+    </insert>
+    <!--<insert id="">-->
+        <!--TRANSACTION COMMIT-->
+    <!--</insert>-->
 </mapper>

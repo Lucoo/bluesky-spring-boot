@@ -32,4 +32,17 @@ public class MemberController {
     public TMember insert(@PathVariable("name") String name, @PathVariable("age") Integer age) {
         return memberService.insert(name, age);
     }
+
+    @RequestMapping(value = "/getMemberCache")
+    @ResponseBody
+    public List<TMember> getListByCache() {
+        System.out.println("test1============================reload");
+        return memberService.getListByCache();
+    }
+
+    @RequestMapping(value = "/reload")
+    @ResponseBody
+    public String testReload() {
+        return "reload";
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.utils.key;
+package com.lucoo.boot.utils.idwork;
 
 /**
  * snowflake

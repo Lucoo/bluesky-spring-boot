@@ -7,4 +7,5 @@ spring-boot实践
 1：需要配置MybatisMapperScannerConfig，本项目见AdsMybatisMapperScannerConfig和RdsMybatisMapperScannerConfig
 2：通用mapper会根据entity对象动态的生产sql语句，所以需在entity对象上加上表名：如：@Table(name = "t_member")
 3：如此一来建议使用通用mapper专用的mybatis生产插件；地址：http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/7.UseMBG.md
+   命令：mvn mybatis-generator:generate
 4：这里生成dao层和mapper文件只针对了read，因为write可以直接使用通用mapper自带的接口足够可以满足正常业务需求
